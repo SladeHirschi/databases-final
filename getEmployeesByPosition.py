@@ -1,14 +1,14 @@
-def get_All_Employees_By_Department(department, cur):
-    departmentsdata = cur.execute("""
+def get_Employees_By_Position(position, cur):
+    positionsData = cur.execute("""
         SELECT
-            dept_name
+            position
         FROM 
-            departments
+            positions
     """)
-    departments = departmentsdata.fetchall()
-    departments = [item for t in departments for item in t]
-    if department not in departments:
-        print("That department does not exist")
+    positions = positionsData.fetchall()
+    positions = [item for t in positions for item in t]
+    if position not in positions:
+        print("That position does not exist")
         return
     data = cur.execute("""
         SELECT 
@@ -20,17 +20,17 @@ def get_All_Employees_By_Department(department, cur):
             employee_details e_d
             ON e_d.employee_id = e.id
         JOIN
-            departments d
-            ON d.id = e_d.department_id
-        WHERE d.dept_name = ?
-        """, [department])
+            positions p
+            ON p.id = e_d.position_id
+        WHERE p.position = ?
+        """, [position])
     employees = data.fetchall()
     print("\n")
     print("\n")
     print("""
-Department: {}
+Position: {}
     Employees:
-        """.format(department))
+        """.format(position))
     for employee in employees:
         if employee is None:
             print("There are none")

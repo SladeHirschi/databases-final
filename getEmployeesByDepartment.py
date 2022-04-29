@@ -1,4 +1,4 @@
-def get_Employees_By_Department(department, cur):
+def get_Employees_By_Department(department, position, cur):
     departmentsdata = cur.execute("""
         SELECT
             dept_name
@@ -25,8 +25,8 @@ def get_Employees_By_Department(department, cur):
         JOIN
             positions p
             ON p.id = e_d.position_id
-        WHERE d.dept_name = ? AND p.position = 'employee'
-        """, [department])
+        WHERE d.dept_name = ? AND p.position = ?
+        """, [department, position])
     employees = data.fetchall()
     print("\n")
     print("\n")
