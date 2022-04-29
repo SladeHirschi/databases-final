@@ -18,7 +18,7 @@ def getEmployeesByDepartment(department):
     get_Employees_By_Department(department, cur)
 
 def getEmployees():
-    
+    print("getting employees")
 
 def getFunction():
     return input("""
