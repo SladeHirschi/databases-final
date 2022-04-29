@@ -1,8 +1,10 @@
 import sys
 import sqlite3
+from checkIsAdmin import check_Is_Admin
 from getAllEmployeesByDepartment import get_All_Employees_By_Department
 from getSupervisorsByDepartment import get_Supervisors_By_Department
 from getEmployeesByDepartment import get_Employees_By_Department
+from checkIsAdmin import check_Is_Admin
 
 
 con = sqlite3.connect('database.db')
@@ -16,6 +18,9 @@ def getAllEmployeesByDepartment(department):
 
 def getEmployeesByDepartment(department):
     get_Employees_By_Department(department, cur)
+
+def checkIsAdmin(admin):
+    return check_Is_Admin(admin,cur)
 
 def getEmployees():
     print("getting employees")
@@ -40,7 +45,8 @@ def getFunction():
             addComment, 
             addReply, 
             likeComment, 
-            viewFriendsPosts
+            viewFriendsPosts,
+            moveEmployee
 
     TO quit enter 'QUIT'
 """)
@@ -63,6 +69,21 @@ def main():
             department = input("Which department? (tire_shop, front_end, produce, bakery, deli, night_merch, morning_merch, optical, hearing, pharmacy, meat, adminstration, food_court) ")
             getEmployeesByDepartment(department)
             function = getFunction()
+
+        elif function == "moveEmployee":
+            admin = input("What is your admin ID? ")
+            isAdmin = checkIsAdmin(admin)
+            print(isAdmin)
+            if admin == None:
+                print("Sorry you need to provide and ID")
+                function = getFunction()
+            if isAdmin == True:
+                employee = input("What employee is being moved? ")
+                department = input("What department are they being moved too? ")
+            else:
+                print("Sorry you have to be an Admin to move employees")
+            function = getFunction()
+            
 
         elif function == 'addRelation':
             username1 = input("What is the username of your account? ")

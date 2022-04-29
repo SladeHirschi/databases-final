@@ -1,3 +1,3 @@
-INSERT INTO status(id,status) VALUES (1,'active');
-INSERT INTO status(id,status) VALUES (2,'inactive');
-INSERT INTO status(id,status) VALUES (3,'expired');
+INSERT INTO status(id,status) VALUES (1,'gold_star');
+INSERT INTO status(id,status) VALUES (2,'business');
+INSERT INTO status(id,status) VALUES (3,'executive');
