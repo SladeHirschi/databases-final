@@ -21,9 +21,9 @@ CREATE TABLE status (
 CREATE TABLE employee_details (
     id INTEGER PRIMARY KEY,
     employment_start DATE,
-    position_id id,
+    position_id INTEGER,
     employee_id INTEGER UNIQUE,
-    department_id id,
+    department_id INTEGER,
     FOREIGN KEY (position_id) REFERENCES positions(id),
     FOREIGN KEY (employee_id) REFERENCES employees(id),
     FOREIGN KEY (department_id) REFERENCES departments(id)
