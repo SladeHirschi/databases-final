@@ -4,7 +4,8 @@ from checkIsAdmin import check_Is_Admin
 from getEmployeesByDepartment import get_Employees_By_Department
 from getEmployeesByPosition import get_Employees_By_Position
 from getEmployees import get_Employees
-from moveEmployee import move_Employee
+from moveEmployeeDepartment import move_Employee_Department
+from moveEmployeePosition import move_Employee_Position
 
 con = sqlite3.connect('database.db')
 cur = con.cursor()
@@ -18,8 +19,11 @@ def getEmployeesByPosition(position):
 def checkIsAdmin(admin):
     return check_Is_Admin(admin,cur)
 
-def moveEmployee(employee, department):
-    move_Employee(employee, department, cur)
+def moveEmployeeDepartment(employee, department):
+    move_Employee_Department(employee, department, cur)
+
+def moveEmployeePosition(employee, position):
+    move_Employee_Position(employee, position, cur)
 
 def getEmployees():
     get_Employees(cur)
@@ -35,13 +39,8 @@ def printOptions():
             getMembers, 
             getSupervisors, 
             getInventory,
-            viewPosts, 
-            addPost, 
-            addComment, 
-            addReply, 
-            likeComment, 
-            viewFriendsPosts,
-            moveEmployee
+            moveEmployee,
+            movePosition
     
     To redisplay instructions enter 'HELP'
     To quit enter 'QUIT'
@@ -78,7 +77,21 @@ def main():
             if isAdmin == True:
                 employee = input("What employee is being moved? ")
                 department = input("What department are they being moved too? ")
-                moveEmployee(employee,department)
+                moveEmployeeDepartment(employee,department)
+            else:
+                print("Sorry you have to be an Admin to move employees")
+            function = getFunction()
+
+        elif function == "movePosition":
+            admin = input("What is your admin ID? ")
+            isAdmin = checkIsAdmin(admin)
+            if admin == None:
+                print("Sorry you need to provide and ID")
+                function = getFunction()
+            if isAdmin == True:
+                employee = input("What employee is being moved? ")
+                position = input("What position are they being moved too? ")
+                moveEmployeePosition(employee,position)
             else:
                 print("Sorry you have to be an Admin to move employees")
             function = getFunction()

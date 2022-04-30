@@ -1,4 +1,4 @@
-def move_Employee(employee, department, cur):
+def move_Employee_Department(employee, department, cur):
     departmentdata = cur.execute("""
         SELECT
             d.id,
@@ -8,9 +8,6 @@ def move_Employee(employee, department, cur):
         JOIN 
             employees e
             ON e.employee_name = ?
-        JOIN
-            employee_details e_d
-            ON e_d.employee_id = e.id
         WHERE d.dept_name = ?
     """,[employee, department])
     departments = departmentdata.fetchone()
