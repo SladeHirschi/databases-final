@@ -6,6 +6,9 @@ from getEmployeesByPosition import get_Employees_By_Position
 from getEmployees import get_Employees
 from moveEmployeeDepartment import move_Employee_Department
 from moveEmployeePosition import move_Employee_Position
+# from moveEmployee import move_Employee
+from getMembers import get_Members
+from getMembersByStatus import get_Members_By_Status
 
 con = sqlite3.connect('database.db')
 cur = con.cursor()
@@ -28,6 +31,12 @@ def moveEmployeePosition(employee, position):
 def getEmployees():
     get_Employees(cur)
 
+def getMembers():
+    get_Members(cur)
+
+def getMembersByStatus(status):
+    get_Members_By_Status(status, cur)
+
 def printOptions():
     print("""
     What command would you like to do? 
@@ -36,11 +45,11 @@ def printOptions():
             getEmployeesByDepartment,
             getEmployeesByPosition,
             getDepartments, 
-            getMembers, 
-            getSupervisors, 
-            getInventory,
             moveEmployee,
             movePosition
+            getMembers,
+            getMembersByStatus,
+            moveEmployee
     
     To redisplay instructions enter 'HELP'
     To quit enter 'QUIT'
@@ -95,19 +104,6 @@ def main():
             else:
                 print("Sorry you have to be an Admin to move employees")
             function = getFunction()
-            
-
-        elif function == 'addRelation':
-            username1 = input("What is the username of your account? ")
-            username2 = input("What is the username of the friend you want to add? ")
-            addRelation(username1, username2)
-            function = getFunction()
-
-        elif function == 'viewPosts':
-            viewPosts()
-            position = input("What position? (employee, supervisor, admin) ")
-            getEmployeesByDepartment(department, position)
-            function = getFunction()
 
         elif function == 'getEmployeesByPosition':
             position = input("What position? (employee, supervisor, admin) ")
@@ -118,8 +114,18 @@ def main():
             getEmployees()
             function = getFunction()
 
+        elif function == 'getMembers':
+            getMembers()
+            function = getFunction()
+
+        elif function == 'getMembersByStatus':
+            status = input("What status? (gold_star, business, executive) ")
+            getMembersByStatus(status)
+            function = getFunction()
+
         elif function == 'QUIT':
             break
+
         else:
             print("There is no function named " + function)
             function = getFunction()
