@@ -11,13 +11,12 @@ def change_Member_Status(member, status, cur, con):
         WHERE m.member_name = ?
     """,[status, member])
     member = memberData.fetchone()
-    print(member[1],member[0] )
     if member is not None:
         cur.execute("""
             UPDATE 
                 member_details
             SET 
-                email = ?
+                status_id = ?
             WHERE
                 member_id = ?
         """,[member[1],member[0]])
