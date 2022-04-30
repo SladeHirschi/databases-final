@@ -8,7 +8,7 @@ def check_Is_Admin(admin, cur):
         WHERE id = ?
     """,[admin])
     employee = employeedata.fetchall()
-    print(employee)
+    # print(employee)
     if employee != []:
         details = cur.execute("""
             SELECT
@@ -18,8 +18,8 @@ def check_Is_Admin(admin, cur):
             WHERE e_d.employee_id = ?
         """,[admin])
         adminId = details.fetchone()
-        print(adminId[0])
+        # print(adminId[0])
         if adminId[0] == 3:
-            print("Reached into the if statement, something is wrong elsewhere.")
+            # print("Reached into the if statement, something is wrong elsewhere.")
             return True
     return False
