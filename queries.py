@@ -3,21 +3,26 @@ import sqlite3
 from checkIsAdmin import check_Is_Admin
 from getEmployeesByDepartment import get_Employees_By_Department
 from getEmployeesByPosition import get_Employees_By_Position
+from getEmployeesByDepartmentAndPosition import get_Employees_By_Department_And_Position
 from getEmployees import get_Employees
 from moveEmployeeDepartment import move_Employee_Department
 from moveEmployeePosition import move_Employee_Position
 # from moveEmployee import move_Employee
 from getMembers import get_Members
 from getMembersByStatus import get_Members_By_Status
+from changeMemberStatus import change_Member_Status
 
 con = sqlite3.connect('database.db')
 cur = con.cursor()
 
-def getEmployeesByDepartment(department, position):
-    get_Employees_By_Department(department, position, cur)
+def getEmployeesByDepartment(department):
+    get_Employees_By_Department(department, cur)
 
 def getEmployeesByPosition(position):
     get_Employees_By_Position(position, cur)
+
+def getEmployeesByDepartmentAndPosition(department, position):
+    get_Employees_By_Department_And_Position(department, position, cur)
 
 def checkIsAdmin(admin):
     return check_Is_Admin(admin,cur)
@@ -37,6 +42,9 @@ def getMembers():
 def getMembersByStatus(status):
     get_Members_By_Status(status, cur)
 
+def changeMemberStatus(member, status):
+    change_Member_Status(member, status, cur, con)
+
 def printOptions():
     print("""
     What command would you like to do? 
@@ -44,12 +52,11 @@ def printOptions():
             getEmployees,
             getEmployeesByDepartment,
             getEmployeesByPosition,
-            getDepartments, 
+            getEmployeesByDepartmentAndPosition,
             moveEmployee,
             movePosition
             getMembers,
             getMembersByStatus,
-            moveEmployee
     
     To redisplay instructions enter 'HELP'
     To quit enter 'QUIT'
@@ -65,10 +72,6 @@ def main():
     while function != 'exit':
         if function == 'HELP':
             printOptions()
-            function = getFunction()
-        elif function == 'getEmployeesByDepartment':
-            department = input("Which department? (tire_shop, front_end, produce, bakery, deli, night_merch, morning_merch, optical, hearing, pharmacy, meat, adminstration, food_court) ")
-            getAllEmployeesByDepartment(department)
             function = getFunction()
 
         elif function == 'getEmployeesByDepartment':
@@ -110,6 +113,12 @@ def main():
             getEmployeesByPosition(position)
             function = getFunction()
 
+        elif function == 'getEmployeesByDepartmentAndPosition':
+            department = input("Which department? (tire_shop, front_end, produce, bakery, deli, night_merch, morning_merch, optical, hearing, pharmacy, meat, adminstration, food_court) ")
+            position = input("What position? (employee, supervisor, admin) ")
+            getEmployeesByDepartmentAndPosition(department, position)
+            function = getFunction()
+
         elif function == 'getEmployees':
             getEmployees()
             function = getFunction()
@@ -121,6 +130,20 @@ def main():
         elif function == 'getMembersByStatus':
             status = input("What status? (gold_star, business, executive) ")
             getMembersByStatus(status)
+            function = getFunction()
+
+        elif function == 'changeMemberStatus':
+            admin = input("What is your admin ID? ")
+            isAdmin = checkIsAdmin(admin)
+            if admin == None:
+                print("Sorry you need to provide and ID")
+                function = getFunction()
+            if isAdmin == True:
+                member = input("What member is being changed? ")
+                status = input("What status? (gold_star, business, executive) ")
+                changeMemberStatus(member, status)
+            else:
+                print("Sorry you have to be an Admin to change member status")
             function = getFunction()
 
         elif function == 'QUIT':
