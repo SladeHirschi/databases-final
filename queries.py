@@ -7,10 +7,10 @@ from getEmployeesByDepartmentAndPosition import get_Employees_By_Department_And_
 from getEmployees import get_Employees
 from moveEmployeeDepartment import move_Employee_Department
 from moveEmployeePosition import move_Employee_Position
-# from moveEmployee import move_Employee
 from getMembers import get_Members
 from getMembersByStatus import get_Members_By_Status
 from changeMemberStatus import change_Member_Status
+from getDetails import *
 
 con = sqlite3.connect('database.db')
 cur = con.cursor()
@@ -45,6 +45,12 @@ def getMembersByStatus(status):
 def changeMemberStatus(member, status):
     change_Member_Status(member, status, cur, con)
 
+def getMemberDetails(member):
+    get_Member_Details(member, cur)
+
+def getEmployeeDetails(employee):
+    get_Employee_Details(employee, cur)
+
 def printOptions():
     print("""
     What command would you like to do? 
@@ -57,6 +63,8 @@ def printOptions():
             movePosition
             getMembers,
             getMembersByStatus,
+            getEmployeeDetails,
+            getMemberDetails
     
     To redisplay instructions enter 'HELP'
     To quit enter 'QUIT'
@@ -144,6 +152,16 @@ def main():
                 changeMemberStatus(member, status)
             else:
                 print("Sorry you have to be an Admin to change member status")
+            function = getFunction()
+
+        elif function == 'getMemberDetails':
+            member = input("What member? ")
+            getMemberDetails(member)
+            function = getFunction()
+
+        elif function == 'getEmployeeDetails':
+            employee = input("What employee? ")
+            getEmployeeDetails(employee)
             function = getFunction()
 
         elif function == 'QUIT':
