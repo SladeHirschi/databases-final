@@ -64,7 +64,8 @@ def printOptions():
             getMembers,
             getMembersByStatus,
             getEmployeeDetails,
-            getMemberDetails
+            getMemberDetails,
+            changeMemberStatus
     
     To redisplay instructions enter 'HELP'
     To quit enter 'QUIT'
